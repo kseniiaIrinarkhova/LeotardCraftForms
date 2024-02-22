@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import { RhinestonesType, Rhinestone, Project } from '../types/main';
 import { projects } from "../data/projects";
 import { rhinestones } from "../data/rhinestones";
+import {router as projectRouter} from '../routes/projects';
+import { router as rhinestoneRouter } from '../routes/rhinestones';
 
 /*******************Main Declarations***********/
 dotenv.config();
@@ -16,15 +18,9 @@ app.use(logRequests);
 
 
 /***************Routes**************************/
-app.route('/projects')
-    .get((req: Request, res: Response) => {
-        return res.send(projects);
-    });
-
-app.route('/rhinestones')
-    .get((req: Request, res: Response)=>{
-        return res.send(rhinestones)
-    });
+//use  specific routes
+app.use('/projects', projectRouter);
+app.use('/rhinestones', rhinestoneRouter);
 
 app.get('/', (req: Request, res: Response) => {
     return res.send(`The first start point for LeotardCraft projects`);
