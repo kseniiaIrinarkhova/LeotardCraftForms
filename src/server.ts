@@ -1,5 +1,5 @@
 /*******************Import**********************/
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { RhinestonesType, Rhinestone, Project } from '../types/main';
 import { projects } from "../data/projects";
@@ -12,24 +12,21 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 /***************Middleware**********************/
-
+app.use(logRequests);
 
 
 /***************Routes**************************/
 app.route('/projects')
     .get((req: Request, res: Response) => {
-        console.log("Get all projects");
         return res.send(projects);
     });
 
 app.route('/rhinestones')
     .get((req: Request, res: Response)=>{
-        console.log("Get all rhinestones");
         return res.send(rhinestones)
     });
 
 app.get('/', (req: Request, res: Response) => {
-    // res.json({projects, rhinestones})
     return res.send(`The first start point for LeotardCraft projects`);
 })
 
@@ -38,3 +35,23 @@ app.get('/', (req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
+
+/*************Helper functions****************/
+/**
+ * Function for log the request time and data
+ * @param req request object
+ * @param res response object
+ * @param next next function
+ * @returns finished logRequests middleware function
+ */
+function logRequests(req: Request, res: Response, next: NextFunction){
+    //create instance of Data() class
+    const reqTime = new Date();
+    //log time when we've got the request
+    console.log(`
+    ----------
+    ${reqTime.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`);
+
+    return next();
+}
