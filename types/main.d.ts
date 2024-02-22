@@ -16,13 +16,13 @@ type Rhinestone = {
      */
     size: string;
     /**
-     * Information about rhinestones color in HEX format
+     * Information about rhinestones color
      */
     color: string;
     /**
      * Additional link for resources
      */
-    url: string; 
+    url?: string; 
 };
 
 /**Project type */
@@ -36,9 +36,9 @@ type Project ={
      */
     title: string;
     /**
-     * The list of rhinestones that is used in project
+     * The list of rhinestones and its amount that is used in project
      */
-    rhinestones?: Rhinestone[];
+    rhinestones?: {rhinestoneId: number, amount: number}[];
 };
 
 export{RhinestonesType, Rhinestone, Project}

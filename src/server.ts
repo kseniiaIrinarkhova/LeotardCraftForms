@@ -2,6 +2,8 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { RhinestonesType, Rhinestone, Project } from '../types/main';
+import { projects } from "../data/projects";
+import { rhinestones } from "../data/rhinestones";
 
 /*******************Main Declarations***********/
 dotenv.config();
@@ -14,16 +16,13 @@ const port = process.env.PORT || 3000;
 
 
 /***************Routes**************************/
-app.get('/', (req: Request,res:Response)=>{
-    const pr: Project = {
-        id: 1,
-        title: "Test Project"
-    }
-res.send(`The first start point for LeotardCraft project. Project info: ${pr.id} ${pr.title}`);
+app.get('/', (req: Request, res: Response) => {
+    // res.json({projects, rhinestones})
+   return res.send(`The first start point for LeotardCraft projects`);
 })
 
 
 /***************Server Listen******************/
-app.listen(port,()=>{
-console.log(`[server]: Server is running at http://localhost:${port}`);
+app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
 });
