@@ -16,9 +16,21 @@ const port = process.env.PORT || 3000;
 
 
 /***************Routes**************************/
+app.route('/projects')
+    .get((req: Request, res: Response) => {
+        console.log("Get all projects");
+        return res.send(projects);
+    });
+
+app.route('/rhinestones')
+    .get((req: Request, res: Response)=>{
+        console.log("Get all rhinestones");
+        return res.send(rhinestones)
+    });
+
 app.get('/', (req: Request, res: Response) => {
     // res.json({projects, rhinestones})
-   return res.send(`The first start point for LeotardCraft projects`);
+    return res.send(`The first start point for LeotardCraft projects`);
 })
 
 
