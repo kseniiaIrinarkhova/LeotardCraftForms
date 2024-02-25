@@ -41,4 +41,28 @@ type Project ={
     rhinestones?: {rhinestoneId: number, amount: number}[];
 };
 
-export{RhinestonesType, Rhinestone, Project}
+/**User type */
+type User = {
+    /**
+     * User ID
+     */
+    id: number;
+    /**
+     * Username
+     */
+    userName: string;
+    /**
+     * User first name
+     */
+    firstName: string;
+    /**
+     * User last name
+     */
+    lastName: string;
+    /**
+     * User email
+     */
+    email: string;
+}
+
+export{RhinestonesType, Rhinestone, Project, User}

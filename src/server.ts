@@ -6,6 +6,7 @@ import { projects } from "../data/projects";
 import { rhinestones } from "../data/rhinestones";
 import {router as projectRouter} from '../routes/projects';
 import { router as rhinestoneRouter } from '../routes/rhinestones';
+import { router as usersRouter } from "../routes/users";
 
 /*******************Main Declarations***********/
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 //use  specific routes
 app.use('/projects', projectRouter);
 app.use('/rhinestones', rhinestoneRouter);
+app.use('/users', usersRouter);
 
 app.get('/', (req: Request, res: Response) => {
     return res.send(`The first start point for LeotardCraft projects`);
