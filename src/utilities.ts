@@ -1,4 +1,26 @@
-import { RhinestonesType } from '../types/main';
+import { RhinestonesType} from '../types/main';
+
+/************Classes************************************** */
+
+/**
+ * Class for response error handling
+ */
+class ResError extends Error {
+    _status: number;
+    constructor(status?: number, message?: string) {
+        super(message); // 'Error' breaks prototype chain here
+        //additional property
+        if (status !== undefined) {
+            this._status = status;
+        } else this._status = 500;
+        Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
+    }
+    get status() {
+        return this._status
+    }
+}
+
+/************Functions************************************** */
 
 /**
  * Function to check if the type is RhinostonesType
@@ -11,4 +33,16 @@ function isRhinostoneType(type: string): type is RhinestonesType {
         type === "No-HotFix";
 }
 
-export { isRhinostoneType }
+
+/**
+ * function that return custon error with status
+ * @param status number
+ * @param msg string
+ * @returns ResError
+ */
+function error(status:number, msg:string) : ResError {
+    let err = new ResError(status,msg);
+    return err;
+}
+
+export { isRhinostoneType, error,ResError }

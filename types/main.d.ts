@@ -1,5 +1,5 @@
 /**Rhinestones Types: "Sew-on", "HotFix", "No-HotFix" */
-type RhinestonesType = "Sew-on" |"HotFix" | "No-HotFix";
+type RhinestonesType = "Sew-on" | "HotFix" | "No-HotFix";
 
 /**Rhinestone type */
 type Rhinestone = {
@@ -22,11 +22,11 @@ type Rhinestone = {
     /**
      * Additional link for resources
      */
-    url?: string; 
+    url?: string;
 };
 
 /**Project type */
-type Project ={
+type Project = {
     /**
      * Project ID
      */
@@ -42,7 +42,7 @@ type Project ={
     /**
      * The list of rhinestones and its amount that is used in project
      */
-    rhinestones?: {rhinestoneId: number, amount: number}[];
+    rhinestones?: { rhinestoneId: number, amount: number }[];
 };
 
 /**User type */
@@ -69,4 +69,5 @@ type User = {
     email: string;
 }
 
-export{RhinestonesType, Rhinestone, Project, User}
+
+export { RhinestonesType, Rhinestone, Project, User }
