@@ -14,7 +14,7 @@ router.route('/')
     .get((req: Request, res: Response) => {
         const links = [
             {
-                href: "rhinestones/:id",
+                href: "/api/rhinestones/:id",
                 rel: ":id",
                 type: "GET",
             }
@@ -54,12 +54,12 @@ router.route('/:id')
         if (stone){
             const links = [
                 {
-                    href: `rhinestones/${req.params.id}`,
+                    href: `/api/rhinestones/${req.params.id}`,
                     rel: "",
                     type: "PATCH",
                 },
                 {
-                    href: `rhinestones/${req.params.id}`,
+                    href: `/api/rhinestones/${req.params.id}`,
                     rel: "",
                     type: "DELETE",
                 }

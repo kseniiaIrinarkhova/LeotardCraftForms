@@ -26,9 +26,9 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 //use  specific routes
-app.use('/projects', projectRouter);
-app.use('/rhinestones', rhinestoneRouter);
-app.use('/users', usersRouter);
+app.use('/api/projects', projectRouter);
+app.use('/api/rhinestones', rhinestoneRouter);
+app.use('/api/users', usersRouter);
 
 
 //Not found middleware

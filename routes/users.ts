@@ -16,12 +16,12 @@ router.route('/')
     .get((req: Request, res: Response) => {
         const links = [
             {
-                href: "users/:id",
+                href: "/api/users/:id",
                 rel: ":id",
                 type: "GET",
             },
             {
-                href: "users/:id/projects",
+                href: "/api/users/:id/projects",
                 rel: ":id",
                 type: "GET", 
             }
@@ -61,12 +61,12 @@ router.route('/:id')
         if (user) {
             const links = [
                 {
-                    href: `users/${req.params.id}`,
+                    href: `/api/users/${req.params.id}`,
                     rel: "",
                     type: "PATCH",
                 },
                 {
-                    href: `users/${req.params.id}`,
+                    href: `/api/users/${req.params.id}`,
                     rel: "",
                     type: "DELETE",
                 }
