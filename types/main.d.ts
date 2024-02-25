@@ -32,6 +32,10 @@ type Project ={
      */
     id: number;
     /**
+     * Foreign key for User object. ID of user that created project
+     */
+    userId: number;
+    /**
      * Project title
      */
     title: string;

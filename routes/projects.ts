@@ -3,6 +3,7 @@ import express, { Express, NextFunction, Request, Response, Router } from "expre
 import { RhinestonesType, Rhinestone, Project } from '../types/main';
 import { projects } from "../data/projects";
 import { rhinestones } from "../data/rhinestones";
+import {users} from "../data/users";
 
 /*******************Main Declarations***********/
 const router: Router = express.Router();
@@ -13,11 +14,12 @@ router.route('/')
         return res.send(projects);
     })
     .post((req: Request, res: Response, next: NextFunction) => {
-        if(req.body.title)
+        if(req.body.title && req.body.userId)
         {
             const project: Project = {
                 "id": projects[projects.length-1].id + 1,
-                "title": req.body.title
+                "title": req.body.title,
+                "userId": req.body.userId,
             };
             projects.push(project);
             return res.send(project);
@@ -29,6 +31,7 @@ router.route('/')
 
 router.route('/:id')
     .get((req: Request, res: Response) => {
+        
         let project: Project = projects.find(p => p.id === Number(req.params.id)) as Project;
         if (project) return res.status(200).send(project)
         else return res.status(404).send("Ups, something goes wrong")
@@ -41,8 +44,8 @@ router.route('/:id')
             //check all keys in object
             for(key in project)
             {
-                //if we have this key in request body, chenge object
-                if( key !== "id" && (key in req.body))
+                //if we have this key in request body, chenge object. We can't change project ID and user ID!
+                if( key !== "id" && key !== "userId" && (key in req.body))
                 {
                     project[key] = req.body[key]; 
                 }
