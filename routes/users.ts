@@ -1,8 +1,10 @@
 /*******************Import**********************/
-import express, { Express, NextFunction, Request, Response, Router } from "express";
-import { RhinestonesType, Rhinestone, Project, User } from '../types/main';
+import express, { NextFunction, Request, Response, Router } from "express";
+import { Project, User } from '../types/main';
 import { users } from "../data/users";
 import { projects } from "../data/projects";
+import { error } from "../src/utilities";
+
 
 
 /*******************Main Declarations***********/
@@ -12,7 +14,7 @@ const router: Router = express.Router();
 router.route('/')
     //get all users
     .get((req: Request, res: Response) => {
-        return res.send(users);
+        return res.send({ data: users });
     })
     // post new user
     .post((req: Request, res: Response, next: NextFunction) => {
@@ -29,26 +31,26 @@ router.route('/')
             //add user to our collection
             users.push(user);
             //send response
-            return res.send(user);
+            return res.send({ data: user });
         }
         //send error response
-        else return res.status(500).send("Wrong body object for POST request");
+        else return next(error(500, "Wrong body object for POST request"));
     });
 
 /*******************Routes with parameters******/
 
 router.route('/:id')
     //get user by id
-    .get((req: Request, res: Response) => {
+    .get((req: Request, res: Response, next: NextFunction) => {
         //try to find user with provided in route id
         let user: User = users.find(p => p.id === Number(req.params.id)) as User;
         //if found - return this user
-        if (user) return res.status(200).send(user)
+        if (user) return res.status(200).send({ data: user })
         //else return error
-        else return res.status(404).send("Ups, something goes wrong")
+        else return next(error(404, `Oops, something goes wrong. No users with ID = ${req.params.id}`));
     })
     //change user data 
-    .patch((req: Request, res: Response) => {
+    .patch((req: Request, res: Response, next: NextFunction) => {
         //try to find user with provided in route id
         let user: User = users.find(p => p.id === Number(req.params.id)) as User;
         //as we store objects in users array, we have a refferance for this object
@@ -62,13 +64,13 @@ router.route('/:id')
                 }
             }
             //return changed user
-            return res.status(200).send(user)
+            return res.status(200).send({ data: user })
         }
         //return error
-        else return res.status(404).send("Ups, something goes wrong")
+        else return next(error(404, `Oops, something goes wrong. No users with ID = ${req.params.id}`));
     })
     //delete user by id
-    .delete((req: Request, res: Response) => {
+    .delete((req: Request, res: Response, next: NextFunction) => {
         //try to find user by id
         let user: User = users.find((p, i) => {
             if (p.id === Number(req.params.id)) {
@@ -78,15 +80,15 @@ router.route('/:id')
             }
         }) as User;
         //if user was in collection return that it was deleted
-        if (user) return res.status(200).send(`User ID=${req.params.id} was deleted`)
+        if (user) return res.status(200).send({ message: `User ID=${req.params.id} was deleted` })
         //return error
-        else return res.status(404).send("Ups, something goes wrong")
+        else return next(error(404, `Oops, something goes wrong. No users with ID = ${req.params.id}`));
     });
 
 //find user projects
 router.route('/:id/projects')
     //get user projects
-    .get((req: Request, res: Response) => {
+    .get((req: Request, res: Response, next: NextFunction) => {
         //try to find user by provided id
         let user: User = users.find(p => p.id === Number(req.params.id)) as User;
         //check if we have query variable
@@ -111,13 +113,13 @@ router.route('/:id/projects')
                         }
                     })
                     //return the error that we don't have project with specific rhinestone id
-                    if (userProjects.length == 0) return res.status(404).send(`User with ID = ${req.params.id} doesn't have projects with rhinestone ID = ${rhinestoneId}.`)
+                    if (userProjects.length == 0) return next(error(404, `User with ID = ${req.params.id} doesn't have projects with rhinestone ID = ${rhinestoneId}.`));
                 }
                 //return projects
-                return res.status(200).send(userProjects);
+                return res.status(200).send({ data: userProjects });
             }
             //return error
-            else return res.status(404).send(`User with ID = ${req.params.id} doesn't have projects.`)
+            else return next(error(404, `User with ID = ${req.params.id} doesn't have projects.`));
         };
     })
 
