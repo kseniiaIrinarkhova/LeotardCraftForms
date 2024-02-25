@@ -15,6 +15,7 @@ const port = process.env.PORT || 3000;
 
 /***************Middleware**********************/
 app.use(logRequests);
+app.use(express.json());
 
 
 /***************Routes**************************/
