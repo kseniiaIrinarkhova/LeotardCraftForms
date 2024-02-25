@@ -32,7 +32,39 @@ router.route('/')
 
 
 /*******************Routes with parameters******/
-
+router.route('/:id')
+    .get((req: Request, res: Response) => {
+        let stone: Rhinestone = rhinestones.find(s => s.id === Number(req.params.id)) as Rhinestone;
+        if (stone) return res.status(200).send(stone)
+        else return res.status(404).send("Ups, something goes wrong")
+    })
+    .patch((req: Request, res: Response) => {
+        let stone: Rhinestone = rhinestones.find(s => s.id === Number(req.params.id)) as Rhinestone;
+        console.log(stone)
+        //as we store objects in projects array, we have a refferance for this object
+        if (stone) {
+            let key: keyof Rhinestone;
+            //check all keys in object
+            for (key in stone) {
+                //if we have this key in request body, chenge object
+                if (key !== "id" && (key in req.body)) {
+                    stone[key] = req.body[key];
+                }
+            }
+            return res.status(200).send(stone)
+        }
+        else return res.status(404).send("Ups, something goes wrong")
+    })
+    .delete((req: Request, res: Response) => {
+        let stone: Rhinestone = rhinestones.find((s, i) => {
+            if (s.id === Number(req.params.id)) {
+                rhinestones.splice(i, 1);
+                return true;
+            }
+        }) as Rhinestone;
+        if (stone) return res.status(200).send(`Rhinestone ID=${req.params.id} was deleted`)
+        else return res.status(404).send("Ups, something goes wrong")
+    });
 
 
 /***********************************************/
