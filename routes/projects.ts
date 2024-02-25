@@ -11,10 +11,13 @@ const router: Router = express.Router();
 
 /*******************Routes without parameters***/
 router.route('/')
+//get all projects
     .get((req: Request, res: Response) => {
         return res.send({ data: projects });
     })
+    //create a new project
     .post((req: Request, res: Response, next: NextFunction) => {
+        //need title and userId
         if (req.body.title && req.body.userId) {
             const project: Project = {
                 "id": projects[projects.length - 1].id + 1,
@@ -22,21 +25,28 @@ router.route('/')
                 "userId": req.body.userId,
             };
             projects.push(project);
+            //return created data
             return res.send({ data: project });
         }
+        //return error
         else return next(error(500, "Wrong body object for POST request"));
     });
 
 /*******************Routes with parameters******/
 
 router.route('/:id')
+//get specific project by ID
     .get((req: Request, res: Response, next: NextFunction) => {
-
+//try to find project by Id
         let project: Project = projects.find(p => p.id === Number(req.params.id)) as Project;
+        //if found return data
         if (project) return res.status(200).send({ data: project })
+        //else return error
         else return next(error(404, `Oops, something goes wrong. No projects with ID = ${req.params.id}`));
     })
+    //change project by Id
     .patch((req: Request, res: Response, next: NextFunction) => {
+        //try  to find project by id
         let project: Project = projects.find(p => p.id === Number(req.params.id)) as Project;
         //as we store objects in projects array, we have a refferance for this object
         if (project) {
@@ -48,22 +58,29 @@ router.route('/:id')
                     project[key] = req.body[key];
                 }
             }
+            //return data
             return res.status(200).send({ data: project })
         }
+        //return error
         else return next(error(404, `Oops, something goes wrong. No projects with ID = ${req.params.id}`));
     })
+    //delete project by Id
     .delete((req: Request, res: Response, next: NextFunction) => {
+        //try to find project by Id
         let project: Project = projects.find((p, i) => {
             if (p.id === Number(req.params.id)) {
+                //if found delete project from collection
                 projects.splice(i, 1);
                 return true;
             }
         }) as Project;
-        if (project) return res.status(200).send(`Project ID=${req.params.id} was deleted`)
+        //if found and dekleted object return confirmation
+        if (project) return res.status(200).send({ message: `Project ID=${req.params.id} was deleted` })
+        //return error
         else return next(error(404, `Oops, something goes wrong. No projects with ID = ${req.params.id}`));
     });
 
 
-
+    
 /***********************************************/
 export { router };
