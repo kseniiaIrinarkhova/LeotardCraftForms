@@ -14,7 +14,19 @@ const router: Router = express.Router();
 router.route('/')
     //get all users
     .get((req: Request, res: Response) => {
-        return res.send({ data: users });
+        const links = [
+            {
+                href: "users/:id",
+                rel: ":id",
+                type: "GET",
+            },
+            {
+                href: "users/:id/projects",
+                rel: ":id",
+                type: "GET", 
+            }
+        ];
+        return res.send({ data: users, links: links });
     })
     // post new user
     .post((req: Request, res: Response, next: NextFunction) => {
@@ -42,10 +54,25 @@ router.route('/')
 router.route('/:id')
     //get user by id
     .get((req: Request, res: Response, next: NextFunction) => {
+
         //try to find user with provided in route id
         let user: User = users.find(p => p.id === Number(req.params.id)) as User;
         //if found - return this user
-        if (user) return res.status(200).send({ data: user })
+        if (user) {
+            const links = [
+                {
+                    href: `users/${req.params.id}`,
+                    rel: "",
+                    type: "PATCH",
+                },
+                {
+                    href: `users/${req.params.id}`,
+                    rel: "",
+                    type: "DELETE",
+                }
+            ];
+            return res.status(200).send({ data: user, links: links });
+        }
         //else return error
         else return next(error(404, `Oops, something goes wrong. No users with ID = ${req.params.id}`));
     })

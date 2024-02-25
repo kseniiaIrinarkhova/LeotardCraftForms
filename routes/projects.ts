@@ -13,7 +13,14 @@ const router: Router = express.Router();
 router.route('/')
 //get all projects
     .get((req: Request, res: Response) => {
-        return res.send({ data: projects });
+        const links = [
+            {
+                href: "projects/:id",
+                rel: ":id",
+                type: "GET",
+            }
+        ];
+        return res.send({ data: projects, links: links });
     })
     //create a new project
     .post((req: Request, res: Response, next: NextFunction) => {
@@ -40,7 +47,21 @@ router.route('/:id')
 //try to find project by Id
         let project: Project = projects.find(p => p.id === Number(req.params.id)) as Project;
         //if found return data
-        if (project) return res.status(200).send({ data: project })
+        if (project){
+            const links = [
+                {
+                    href: `projects/${req.params.id}`,
+                    rel: "",
+                    type: "PATCH",
+                },
+                {
+                    href: `projects/${req.params.id}`,
+                    rel: "",
+                    type: "DELETE",
+                }
+            ];
+            return res.status(200).send({ data: project, links: links });
+        } 
         //else return error
         else return next(error(404, `Oops, something goes wrong. No projects with ID = ${req.params.id}`));
     })

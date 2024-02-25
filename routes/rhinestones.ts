@@ -12,7 +12,14 @@ const router: Router = express.Router();
 router.route('/')
 //get all rhinestones
     .get((req: Request, res: Response) => {
-        return res.send({ data: rhinestones });
+        const links = [
+            {
+                href: "rhinestones/:id",
+                rel: ":id",
+                type: "GET",
+            }
+        ];
+        return res.send({ data: rhinestones, links: links });
     })
     //create rhinestone
     .post((req: Request, res: Response, next:NextFunction) => {
@@ -44,7 +51,21 @@ router.route('/:id')
         //try to find rhinestone by Id
         let stone: Rhinestone = rhinestones.find(s => s.id === Number(req.params.id)) as Rhinestone;
         //return object if found
-        if (stone) return res.status(200).send({ data: stone })
+        if (stone){
+            const links = [
+                {
+                    href: `rhinestones/${req.params.id}`,
+                    rel: "",
+                    type: "PATCH",
+                },
+                {
+                    href: `rhinestones/${req.params.id}`,
+                    rel: "",
+                    type: "DELETE",
+                }
+            ];
+            return res.status(200).send({ data: stone, links: links });
+        } 
         //return error
         else return next(error(404, `Oops, something goes wrong. No rhinestoness with ID = ${req.params.id}`));
     })
