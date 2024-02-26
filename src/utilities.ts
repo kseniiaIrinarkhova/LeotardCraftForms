@@ -1,4 +1,4 @@
-import { RhinestonesType} from '../types/main';
+import { RhinestonesType, Project} from '../types/main';
 
 /************Classes************************************** */
 
@@ -45,4 +45,19 @@ function error(status:number, msg:string) : ResError {
     return err;
 }
 
-export { isRhinostoneType, error,ResError }
+/**
+ * Helper function for adding rhinestones to project
+ * @param project Project
+ * @param rhinestones Array of objects {rhinestoneId: number, amount: number}
+ * @returns Progect with array of rhinestones
+ */
+function addRhinestones(project: Project, rhinestones: Array<{ rhinestoneId: number, amount: number }>) : Project {
+    let rentry: { rhinestoneId: number, amount: number };
+    for (rentry of rhinestones) {
+        project.rhinestones?.push(rentry)
+    }
+    return project;
+
+}
+
+export { isRhinostoneType, error,ResError, addRhinestones }

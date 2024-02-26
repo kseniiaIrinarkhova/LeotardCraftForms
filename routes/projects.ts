@@ -4,7 +4,7 @@ import { RhinestonesType, Rhinestone, Project } from '../types/main';
 import { projects } from "../data/projects";
 import { rhinestones } from "../data/rhinestones";
 import { users } from "../data/users";
-import { error } from "../src/utilities"
+import { error, addRhinestones } from "../src/utilities"
 
 /*******************Main Declarations***********/
 const router: Router = express.Router();
@@ -26,11 +26,16 @@ router.route('/')
     .post((req: Request, res: Response, next: NextFunction) => {
         //need title and userId
         if (req.body.title && req.body.userId) {
-            const project: Project = {
+            let project: Project = {
                 "id": projects[projects.length - 1].id + 1,
                 "title": req.body.title,
                 "userId": req.body.userId,
             };
+            //add list of rhinestones
+            if("rhinestones" in req.body){
+                project.rhinestones = [];
+                project = addRhinestones(project, req.body.rhinestones);
+            }
             projects.push(project);
             //return created data
             return res.send({ data: project });
@@ -71,12 +76,21 @@ router.route('/:id')
         let project: Project = projects.find(p => p.id === Number(req.params.id)) as Project;
         //as we store objects in projects array, we have a refferance for this object
         if (project) {
+            //changed rhinestones
+            if ("rhinestones" in req.body)
+            {
+                project.rhinestones =[];
+            }
             let key: keyof Project;
             //check all keys in object
             for (key in project) {
                 //if we have this key in request body, chenge object. We can't change project ID and user ID!
                 if (key !== "id" && key !== "userId" && (key in req.body)) {
-                    project[key] = req.body[key];
+                    //if we get array of rhinestones
+                    if(key == "rhinestones"){
+                        project = addRhinestones(project, req.body.rhinestones);
+                    }
+                    else project[key] = req.body[key];
                 }
             }
             //return data
