@@ -20,9 +20,12 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 const viewsPath: string = path.join(__dirname, '../views')
 
-
+//set views engine
 app.set('view engine', 'pug');
 app.set('views', viewsPath);
+
+// Set public path
+app.use(express.static(path.join(__dirname, '../public')));
 /***************Middleware**********************/
 app.use(logRequests);
 app.use(bodyParser.json());
