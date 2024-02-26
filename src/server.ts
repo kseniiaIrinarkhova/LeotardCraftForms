@@ -8,8 +8,10 @@ import { users } from "../data/users";
 import { router as projectRouter } from '../routes/projects';
 import { router as rhinestoneRouter } from '../routes/rhinestones';
 import { router as usersRouter } from "../routes/users";
-import { ResError } from './utilities';
+import { ResError, addRhinestones, error } from './utilities';
 import path from 'path';
+import bodyParser from 'body-parser';
+import { Project } from "../types/main";
 
 /*******************Main Declarations***********/
 dotenv.config();
@@ -23,12 +25,12 @@ app.set('view engine', 'pug');
 app.set('views', viewsPath);
 /***************Middleware**********************/
 app.use(logRequests);
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 
 
 /***************Routes**************************/
 app.get('/', (req: Request, res: Response) => {
-
     return res.render('index', {users: users, projects: projects, rhinestones: rhinestones})
 })
 
@@ -36,6 +38,29 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/projects', projectRouter);
 app.use('/api/rhinestones', rhinestoneRouter);
 app.use('/api/users', usersRouter);
+
+app.post('/addproject', (req: Request, res: Response, next: NextFunction)=>{
+    //need title and userId
+    if (req.body.title && req.body.userId) {
+        let project: Project = {
+            "id": projects[projects.length - 1].id + 1,
+            "title": req.body.title,
+            "userId": req.body.userId,
+        };
+        //add rhinestone
+        project.rhinestones = [
+            {
+                "rhinestoneId": req.body.rhinestoneId,
+                "amount": req.body.amount
+            }
+        ]
+        projects.push(project);
+        //return created data
+        return res.render('index', { users: users, projects: projects, rhinestones: rhinestones })
+    }
+    //return error
+    else return next(error(500, "Wrong body object for POST request"));
+})
 
 
 //Not found middleware
