@@ -4,7 +4,73 @@ html(lang='en')
 
         script(type='text/javascript' src='client.js' defer)
     body 
-        h1 All LeotardCraft projects
         #projects
+            h1 All LeotardCraft projects
+            each user in users
                 .user-container
-                    p #{users}
+                    .user-username
+                        =user.userName
+                    .user-name
+                        =user.firstName + ' ' + user.firstName
+                    .projects-container 
+                        each pr in projects
+                            if pr.userId == user.id
+                                .project
+                                    .project-title 
+                                        =pr.title 
+                                    .project-rhinestones
+                                        each stone in pr.rhinestones
+                                            each r in rhinestones
+                                                if r.id == stone.rhinestoneId 
+                                                    .rhinestone 
+                                                        table 
+                                                            tr 
+                                                                th type 
+                                                                td 
+                                                                    =r.type
+                                                            tr 
+                                                                th size 
+                                                                td 
+                                                                    =r.size
+                                                            tr 
+                                                                th color 
+                                                                td 
+                                                                    =r.color
+                                                            tr 
+                                                                th Amount
+                                                                td 
+                                                                    =stone.amount
+        #rhinestones 
+            h2 Rhinestones
+            each r in rhinestones 
+                .rhinestone 
+                    table
+                        tr 
+                            th ID 
+                            td 
+                                =r.id 
+                        tr 
+                            th type 
+                            td 
+                                =r.type
+                        tr 
+                            th size 
+                            td 
+                                =r.size
+                        tr 
+                            th color 
+                            td 
+                                =r.color
+        #form-container 
+            form(action='/projects', method='POST')
+                p User 
+                    input(type="number" name="userId" placeholder="Insert userId")
+                p Project title 
+                    input(type="text" name="title" placeholder="Title of new project")
+                p Rhinestone 
+                    input(type="number" name="rhinestoneId" placeholder="rhinestoneId")
+                p How many rhinestones you need? 
+                    input(type="number" name="amount" placeholder="Amount")    
+                input(type="submit")
+
+

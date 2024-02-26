@@ -29,7 +29,7 @@ app.use(express.json());
 /***************Routes**************************/
 app.get('/', (req: Request, res: Response) => {
 
-    return res.render('index', {users: users})
+    return res.render('index', {users: users, projects: projects, rhinestones: rhinestones})
 })
 
 //use  specific routes
