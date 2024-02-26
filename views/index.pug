@@ -11,7 +11,7 @@ html(lang='en')
                     .user-username
                         =user.userName
                     .user-name
-                        =user.firstName + ' ' + user.firstName
+                        =`${user.firstName} ${user.lastName}`
                     .projects-container 
                         each pr in projects
                             if pr.userId == user.id
@@ -25,15 +25,15 @@ html(lang='en')
                                                     .rhinestone 
                                                         table 
                                                             tr 
-                                                                th type 
+                                                                th Type 
                                                                 td 
                                                                     =r.type
                                                             tr 
-                                                                th size 
+                                                                th Size 
                                                                 td 
                                                                     =r.size
                                                             tr 
-                                                                th color 
+                                                                th Color 
                                                                 td 
                                                                     =r.color
                                                             tr 
@@ -50,27 +50,46 @@ html(lang='en')
                             td 
                                 =r.id 
                         tr 
-                            th type 
+                            th Type 
                             td 
                                 =r.type
                         tr 
-                            th size 
+                            th Size 
                             td 
                                 =r.size
                         tr 
-                            th color 
+                            th Color 
                             td 
                                 =r.color
         #form-container 
             form(action='/addproject', method='POST')
-                p User 
-                    input(type="number" name="userId" placeholder="Insert userId")
-                p Project title 
-                    input(type="text" name="title" placeholder="Title of new project")
-                p Rhinestone 
-                    input(type="number" name="rhinestoneId" placeholder="rhinestoneId")
-                p How many rhinestones you need? 
-                    input(type="number" name="amount" placeholder="Amount")    
-                input(type="submit")
+                table
+                    tr 
+                        th(colspan="2", style="text-align: center; padding-bottom: 10px") Add new project to user 
+                    tr  
+                        th User 
+                        td 
+                            select(name="userId" id="userid")
+                                each user in users 
+                                    option(value=user.id)
+                                        =`${user.firstName} ${user.lastName}`
+                    tr 
+                        th Project title 
+                        td 
+                            input(type="text" name="title" placeholder="Title of new project")   
+                    tr 
+                        th Rhinestone 
+                        td 
+                            select(name="rhinestoneId" id="rhinestoneid")
+                                each r in rhinestones 
+                                    option(value=r.id)
+                                        =`${r.id}: ${r.type}, ${r.size}, ${r.color}`
+                    tr 
+                        th How many rhinestones you need? 
+                        td 
+                            input(type="number" name="amount" placeholder="Amount")    
+                    tr 
+                        th(colspan="2") 
+                            input(type="submit")
 
 

@@ -1,3 +1,94 @@
-body{
-    color: red
+body {
+    display: grid;
+    grid-template-areas:
+        "projects stones"
+        "form form";
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+}
+
+#projects {
+    grid-area: projects;
+    background-color: antiquewhite;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    row-gap: 10px;
+    padding-bottom: 10px;
+}
+
+#projects>h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.user-container {
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 30%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+}
+
+.user-username {
+    padding: 10px 5px 0px 5px;
+    text-align: right;
+}
+
+.user-name {
+    padding: 0px 5px 10px 5px;
+    text-align: center;
+    font-style: oblique;
+}
+
+.projects-container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px
+}
+
+.project {
+    border-top: 4px double black;
+}
+
+.project-title {
+    padding: 5px 5px 10px 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.project-rhinestones {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px
+}
+
+
+#rhinestones {
+    grid-area: stones;
+    background-color: bisque;
+    display: flex;
+    flex-flow: row wrap;
+    gap:10px
+}
+
+#rhinestones>h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.rhinestone {
+    border-top: 2px dotted black;
+}
+
+th {
+    text-align: left;
+    padding-left: 10px;
+}
+
+#form-container {
+    grid-area: form;
+    background-color: rgb(212, 171, 121);
+    padding: 10px 5px 10px 5px;
 }
