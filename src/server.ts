@@ -56,7 +56,7 @@ app.post('/addproject', (req: Request, res: Response, next: NextFunction)=>{
         ]
         projects.push(project);
         //return created data
-        return res.render('index', { users: users, projects: projects, rhinestones: rhinestones })
+        return res.redirect('/')
     }
     //return error
     else return next(error(500, "Wrong body object for POST request"));
