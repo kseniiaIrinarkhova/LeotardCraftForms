@@ -57,9 +57,9 @@ After submition - new project would be added to user's card.
 There are few API routes and operations:
 #### Users API
 1. ##### Get All users
-    API end point : `/users`
-    API method: `GET`
-    return object structure: 
+- API end point : `/users`
+- API method: `GET`
+- return object structure: 
 ```
 {
 "data": [
@@ -73,9 +73,9 @@ There are few API routes and operations:
 ] }
 ```
 2. ##### Create new user
-    API end point : `/users`
-    API method: `POST`
-    request body: 
+- API end point : `/users`
+- API method: `POST`
+- request body: 
 ```
 {
 "userName": <userName>,
@@ -85,9 +85,9 @@ There are few API routes and operations:
 }
 ```
 3. ##### Get user by ID
-    API end point : `/users/:id`
-    API method: `GET`
-    return object structure:
+- API end point : `/users/:id`
+- API method: `GET`
+- return object structure:
 ```
 {
 "data": {
@@ -100,9 +100,9 @@ There are few API routes and operations:
 }
 ```
 4. ##### Change user
-    API end point : `/users/:id`
-    API method: `PATCH`
-    request body: any of object properties:
+- API end point : `/users/:id`
+- API method: `PATCH`
+- request body: any of object properties:
 ```
 {
 "userName": <userName>,
@@ -112,19 +112,19 @@ There are few API routes and operations:
 }
 ```
 5. ##### Delete user
-    API end point : `/users/:id`
-    API method: `DELETE`
+- API end point : `/users/:id`
+- API method: `DELETE`
 
 6. ##### All user projects
-    API end point : `/users/:id/projects`
-    API method: `GET`
-    Additional query selectors: `rhinestoneId` - filter only projects with selected rhinestones Id
+- API end point : `/users/:id/projects`
+- API method: `GET`
+- Additional query selectors: `rhinestoneId` - filter only projects with selected rhinestones Id
 
 #### Projects API
 1. ##### Get All projects
-    API end point : `/projects`
-    API method: `GET`
-    return object structure: 
+- API end point : `/projects`
+- API method: `GET`
+- return object structure: 
 ```
 {
     "data": [
@@ -149,9 +149,9 @@ There are few API routes and operations:
 }]}
 ```
 2. ##### Create new project
-    API end point : `/projects`
-    API method: `POST`
-    request body: rhinestones - optional property
+- API end point : `/projects`
+- API method: `POST`
+- request body: rhinestones - optional property
 ```
 {
 "userId": <userId>,
@@ -165,9 +165,9 @@ There are few API routes and operations:
 }
 ```
 3. ##### Get project by ID
-    API end point : `/projects/:id`
-    API method: `GET`
-    return object structure:
+- API end point : `/projects/:id`
+- API method: `GET`
+- return object structure:
 ```
 {
 "data": {
@@ -184,9 +184,9 @@ There are few API routes and operations:
 }
 ```
 4. ##### Change project
-    API end point : `/projects/:id`
-    API method: `PATCH`
-    request body: any of object properties:
+- API end point : `/projects/:id`
+- API method: `PATCH`
+- request body: any of object properties:
 ```
 {
 "title": <title>,
@@ -199,14 +199,14 @@ There are few API routes and operations:
 }
 ```
 5. ##### Delete project
-    API end point : `/projects/:id`
-    API method: `DELETE`
+- API end point : `/projects/:id`
+- API method: `DELETE`
 
 #### Rhinestones API
 1. ##### Get All rhinestones
-    API end point : `/rhinestones`
-    API method: `GET`
-    return object structure: 
+- API end point : `/rhinestones`
+- API method: `GET`
+- return object structure: 
 ```
 {
     "data": [
@@ -219,9 +219,9 @@ There are few API routes and operations:
 ]}
 ```
 2. ##### Create new rhinestone
-    API end point : `/rhinestones`
-    API method: `POST`
-    request body:  rhinestone type should be one of: `'Sew-on'| 'HotFix' | 'No-HotFix'` 
+- API end point : `/rhinestones`
+- API method: `POST`
+- request body:  rhinestone type should be one of: `'Sew-on'| 'HotFix' | 'No-HotFix'` 
 ```
 {
 "type": <rhinestone type>,
@@ -230,9 +230,9 @@ There are few API routes and operations:
 }
 ```
 3. ##### Get rhinestone by ID
-    API end point : `/rhinestones/:id`
-    API method: `GET`
-    return object structure:
+- API end point : `/rhinestones/:id`
+- API method: `GET`
+- return object structure:
 ```
 {
 "data": {
@@ -244,9 +244,9 @@ There are few API routes and operations:
 }
 ```
 4. ##### Change rhinestone
-    API end point : `/rhinestones/:id`
-    API method: `PATCH`
-    request body: any of object properties:
+- API end point : `/rhinestones/:id`
+- API method: `PATCH`
+- request body: any of object properties:
 ```
 {
 "type": <rhinestone type>,
@@ -255,8 +255,8 @@ There are few API routes and operations:
 }
 ```
 5. ##### Delete rhinestone
-    API end point : `/rhinestones/:id`
-    API method: `DELETE`
+- API end point : `/rhinestones/:id`
+- API method: `DELETE`
 
 # Author
 Project prepared as a part of education in **Software Engineering Bootcamp** at *Per Scholas* by [Kseniia Irinarkhova](https://www.linkedin.com/in/kseniia-irinarkhova/).
